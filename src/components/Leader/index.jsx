@@ -6,7 +6,7 @@ export const Leader = ({ leader }) => {
         <>
             <tr>
                 <td className={s.leader}>{leader.name}</td>
-                <td className={s.score}>{(leader.score >= 0) ? leader.score : ('No date')}</td>
+                <td className={s.score}>{(leader.score >= 0) ? leader.score : (0)}</td>
             </tr>
         </>
     )
