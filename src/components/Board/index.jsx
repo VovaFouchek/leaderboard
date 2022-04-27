@@ -1,16 +1,28 @@
 import { useState, useEffect } from "react";
 import s from './board.module.scss';
-import data from '../../data.json';
 import { Leader } from "../Leader";
+import { fetchData } from "../API";
+import axios from "axios";
+
+axios.defaults.baseURL = 'http://coding-test.cube19.io';
+const mainUrl = axios.defaults.baseURL + '/frontend/v1/starting-state'
 
 export const Board = () => {
-    const LINK = 'http://coding-test.cube19.io/frontend/v1/starting-state';
-    const [list, setList] = useState(data);
+    const [list, setList] = useState([]);
 
-    // console.log(data);
+    async function fetchPeople(url) {
+        const response = await fetchData(url);
+        setList(response);
+    }
+
+    useEffect(() => {
+        fetchPeople(mainUrl);
+    }, [mainUrl])
+    
+    console.log(list);
+
     return (
         <div className={s.board}>
-            <h2>Hello</h2>
             <table>
                 <thead>
                     <tr>
@@ -19,9 +31,9 @@ export const Board = () => {
                     </tr>
                 </thead>
                 <tbody>
-                    {list.map((leader) => (
+                    {list ? list.map((leader) => (
                         <Leader leader={leader} key={leader.name} />
-                    ))}
+                    )) : <></>}
                 </tbody>
             </table>
         </div>
