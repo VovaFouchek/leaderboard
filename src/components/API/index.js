@@ -6,5 +6,6 @@ export const fetchData = async (url) => {
         return response.data;
     } catch (e) {
         console.log(e);
+        fetchData(url);
     }
 }
