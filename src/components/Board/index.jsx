@@ -1,26 +1,12 @@
-import { useState, useEffect } from "react";
 import s from './board.module.scss';
 import { Leader } from "../Leader";
-import { fetchData } from "../API";
-import axios from "axios";
+import useAxios from "../API";
 
-axios.defaults.baseURL = 'http://coding-test.cube19.io';
-const mainUrl = axios.defaults.baseURL + '/frontend/v1/starting-state'
 
 export const Board = () => {
-    const [list, setList] = useState([]);
-
-    async function fetchPeople(url) {
-        const response = await fetchData(url);
-        setList(response);
-    }
-
-    useEffect(() => {
-        fetchPeople(mainUrl);
-    }, [mainUrl])
-    
+    const url = 'http://coding-test.cube19.io/frontend/v1/starting-state';
+    const {list} = useAxios(url);
     console.log(list);
-
     return (
         <div className={s.board}>
             <table>
