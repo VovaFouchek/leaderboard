@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 
 
 export const Board = () => {
-    const [list, setList] = useState('');
-
+    const [list, setList] = useState([]);
+    const [sort, setSort] = useState("descending");
 
     async function FetchData() {
         const response = await instance.get(axiosConfig.baseURL)
@@ -16,8 +16,16 @@ export const Board = () => {
     useEffect(() => {
         FetchData();
     }, [])
-    
 
+     const sortedList = () => {
+        sort === "descending" ? setSort("ascending") : setSort("descending");
+        if (sort === "descending") {
+            setList(list.sort((a, b) => a.score - b.score));
+        }else{
+            setList(list.sort((a, b) => b.score - a.score));  
+        }
+        console.log(list);
+    };
 
     function ordinal_suffix_of(i) {
         let j = i % 10,
@@ -33,26 +41,27 @@ export const Board = () => {
         }
         return i + "th";
     }
-    
+
 
     return (
         <>
-        <div className={s.board}>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Position</th>
-                        <th>Leader</th>
-                        <th>Score</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {list ? list.map((leader, index) => (
-                        <Leader leader={leader} number={ordinal_suffix_of(index+1)} key={leader.name}/>
-                    )) : <></>}
-                </tbody>
-            </table>
-        </div>
+        <button onClick={sortedList}>Sorted by</button>
+            <div className={s.board}>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th>Leader</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {list ? list.map((leader, index) => (
+                            <Leader leader={leader} number={ordinal_suffix_of(index + 1)} key={leader.name} />
+                        )) : <></>}
+                    </tbody>
+                </table>
+            </div>
         </>
     )
 }
