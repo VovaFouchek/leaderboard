@@ -10,7 +10,6 @@ export const Board = () => {
         const response = await instance.get(axiosConfig.baseURL)
         setList(response.data);
         console.log(response.data);
-        return response.data;
     }
     useEffect(() => {
         FetchData();
