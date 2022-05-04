@@ -13,9 +13,9 @@ export const ordinal_suffix_of = (i) => {
     return i + "th";
 }
 
-export const sortedList = (list, setList, sort, setSort) => {
-    sort === "descending" ? setSort("ascending") : setSort("descending");
-    if (sort === "descending") {
+export const sortedList = (list, setList, sortValue, setSortValue) => {
+    sortValue === "descending" ? setSortValue("ascending") : setSortValue("descending");
+    if (sortValue === "descending") {
         setList(list.sort((a, b) => a.score - b.score));
     } else {
         setList(list.sort((a, b) => b.score - a.score));

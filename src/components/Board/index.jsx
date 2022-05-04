@@ -4,11 +4,12 @@ import { Leader } from "../Leader";
 import instance, { axiosConfig } from '../API';
 import { ordinal_suffix_of, sortedList } from '../../helpers/functions';
 
+import { Controls } from '../Controls';
 import s from './board.module.scss';
 
 export const Board = () => {
     const [list, setList] = useState([]);
-    const [sort, setSort] = useState("descending");
+    const [sortValue, setSortValue] = useState("descending");
 
     async function FetchData() {
         const response = await instance.get(axiosConfig.baseURL);
@@ -24,9 +25,9 @@ export const Board = () => {
                 return item;
             })
             .sort((a, b) => b.score - a.score)
-            );
+        );
     }
-    
+
     useEffect(() => {
         FetchData();
     }, [])
@@ -34,7 +35,13 @@ export const Board = () => {
     return (
         <>
             <div className={s.board}>
-            <button onClick={() => sortedList(list, setList, sort, setSort)}>Sorted by</button>
+                <Controls
+                    list={list}
+                    setList={setList}
+                    sortValue={sortValue}
+                    setSortValue={setSortValue}
+                    sortedList={sortedList}
+                />
                 <table>
                     <thead>
                         <tr>
