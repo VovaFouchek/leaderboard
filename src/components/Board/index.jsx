@@ -1,15 +1,17 @@
-import s from './board.module.scss';
-import { Leader } from "../Leader";
-import instance, { axiosConfig } from '../API';
 import { useEffect, useState } from 'react';
 
+import { Leader } from "../Leader";
+import instance, { axiosConfig } from '../API';
+import { ordinal_suffix_of, sortedList } from '../../helpers/functions';
+
+import s from './board.module.scss';
 
 export const Board = () => {
     const [list, setList] = useState([]);
     const [sort, setSort] = useState("descending");
 
     async function FetchData() {
-        const response = await instance.get(axiosConfig.baseURL)
+        const response = await instance.get(axiosConfig.baseURL);
 
         setList(response.data
             .map(item => {
@@ -23,42 +25,16 @@ export const Board = () => {
             })
             .sort((a, b) => b.score - a.score)
             );
-        //console.log(response.data);
     }
+    
     useEffect(() => {
         FetchData();
     }, [])
 
-    const sortedList = (list) => {
-        sort === "descending" ? setSort("ascending") : setSort("descending");
-        if (sort === "descending") {
-            setList(list.sort((a, b) => a.score - b.score));
-        } else {
-            setList(list.sort((a, b) => b.score - a.score));
-        }
-        console.log(list);
-    };
-    // console.log(list);
-
-    function ordinal_suffix_of(i) {
-        let j = i % 10,
-            k = i % 100;
-        if (j === 1 && k !== 11) {
-            return i + "st";
-        }
-        if (j === 2 && k !== 12) {
-            return i + "nd";
-        }
-        if (j === 3 && k !== 13) {
-            return i + "rd";
-        }
-        return i + "th";
-    }
-
     return (
         <>
-            <button onClick={() => sortedList(list)}>Sorted by</button>
             <div className={s.board}>
+            <button onClick={() => sortedList(list, setList, sort, setSort)}>Sorted by</button>
                 <table>
                     <thead>
                         <tr>
