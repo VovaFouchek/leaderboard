@@ -10,22 +10,32 @@ export const Board = () => {
 
     async function FetchData() {
         const response = await instance.get(axiosConfig.baseURL)
-        setList(response.data);
-        console.log(response.data);
+
+        setList(response.data.map(item => {
+            if (!item.score) {
+                return {
+                    ...item,
+                    score: 0,
+                }
+            }
+            return item;
+        }));
+        //console.log(response.data);
     }
     useEffect(() => {
         FetchData();
     }, [])
 
-     const sortedList = () => {
+    const sortedList = () => {
         sort === "descending" ? setSort("ascending") : setSort("descending");
         if (sort === "descending") {
             setList(list.sort((a, b) => a.score - b.score));
-        }else{
-            setList(list.sort((a, b) => b.score - a.score));  
+        } else {
+            setList(list.sort((a, b) => b.score - a.score));
         }
         console.log(list);
     };
+   // console.log(list);
 
     function ordinal_suffix_of(i) {
         let j = i % 10,
@@ -42,10 +52,9 @@ export const Board = () => {
         return i + "th";
     }
 
-
     return (
         <>
-        <button onClick={sortedList}>Sorted by</button>
+            <button onClick={sortedList}>Sorted by</button>
             <div className={s.board}>
                 <table>
                     <thead>
