@@ -1,7 +1,6 @@
 import s from './leader.module.scss'
 
 export const Leader = ({ leader, number}) => {
-    console.log(leader);
     return (
         <>
             <tr>
