@@ -1,4 +1,4 @@
-export const ordinal_suffix_of = (i) => {
+export const ordinalSuffixOf = (i) => {
     let j = i % 10,
         k = i % 100;
     if (j === 1 && k !== 11) {
@@ -13,8 +13,11 @@ export const ordinal_suffix_of = (i) => {
     return i + "th";
 }
 
-export const sortedList = (list, setList, sortValue, setSortValue) => {
+export const orderType = (sortValue, setSortValue) => {
     sortValue === "descending" ? setSortValue("ascending") : setSortValue("descending");
+}
+
+export const sortListByOrder = (list, setList, sortValue) => {
     if (sortValue === "descending") {
         setList(list.sort((a, b) => a.score - b.score));
     } else {

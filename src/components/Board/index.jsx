@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { Leader } from "../Leader";
 import instance, { axiosConfig } from '../API';
-import { ordinal_suffix_of, sortedList } from '../../helpers/functions';
+import { ordinalSuffixOf, sortListByOrder, orderType } from '../../helpers/functions';
 
 import { Controls } from '../Controls';
 import s from './board.module.scss';
@@ -12,9 +12,8 @@ export const Board = () => {
     const [sortValue, setSortValue] = useState("descending");
 
     async function FetchData() {
-        const response = await instance.get(axiosConfig.baseURL);
-
-        setList(response.data
+        const { data } = await instance.get(axiosConfig.baseURL);
+        setList(data
             .map(item => {
                 if (!item.score) {
                     return {
@@ -28,6 +27,10 @@ export const Board = () => {
         );
     }
 
+    const SortList = () => {
+        orderType(sortValue, setSortValue)
+        sortListByOrder(list, setList, sortValue)
+    }
     useEffect(() => {
         FetchData();
     }, [])
@@ -36,11 +39,7 @@ export const Board = () => {
         <>
             <div className={s.board}>
                 <Controls
-                    list={list}
-                    setList={setList}
-                    sortValue={sortValue}
-                    setSortValue={setSortValue}
-                    sortedList={sortedList}
+                    sortListByOrder={SortList}
                 />
                 <table>
                     <thead>
@@ -52,7 +51,7 @@ export const Board = () => {
                     </thead>
                     <tbody>
                         {list ? list.map((leader, index) => (
-                            <Leader leader={leader} number={ordinal_suffix_of(index + 1)} key={leader.name} />
+                            <Leader leader={leader} number={ordinalSuffixOf(index + 1)} key={leader.name} />
                         )) : <></>}
                     </tbody>
                 </table>
