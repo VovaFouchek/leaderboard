@@ -13,6 +13,6 @@ const App = () => {
       </Wrapper>
     </div>
   );
-}
+};
 
 export default App;
