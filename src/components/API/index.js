@@ -10,7 +10,7 @@ instance.interceptors.response.use(
   response => response,
   error => {
     if (error.response.status === 500) {
-      console.log('Retrying...');
+      // console.log('Retrying...');
       return instance(error.config);
     }
     throw error.response;

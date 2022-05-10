@@ -1,61 +1,61 @@
 import { useEffect, useState } from 'react';
 
-import { Leader } from "../Leader";
+import { Leader } from '../Leader';
 import instance, { axiosConfig } from '../API';
-import { ordinalSuffixOf, sortListByOrder, orderType } from '../../helpers/functions';
+import { ordinalSuffixOf, sortListByOrder, reverseOrderType } from '../../helpers/functions';
+import { orderTypes } from '../../helpers/consts';
 
 import { Controls } from '../Controls';
 import s from './board.module.scss';
 
 export const Board = () => {
-    const [list, setList] = useState([]);
-    const [sortValue, setSortValue] = useState("descending");
+  const [list, setList] = useState([]);
+  const [sortValue, setSortValue] = useState(orderTypes.ascending);
 
-    async function FetchData() {
-        const { data } = await instance.get(axiosConfig.baseURL);
-        setList(data
-            .map(item => {
-                if (!item.score) {
-                    return {
-                        ...item,
-                        score: 0,
-                    }
-                }
-                return item;
-            })
-            .sort((a, b) => b.score - a.score)
-        );
-    }
+  const setZeroScore = data => {
+    return data.map(item => (!item.score ? { ...item, score: 0 } : item));
+  };
 
-    const SortList = () => {
-        orderType(sortValue, setSortValue)
-        sortListByOrder(list, setList, sortValue)
-    }
-    useEffect(() => {
-        FetchData();
-    }, [])
+  async function getData() {
+    const { data } = await instance.get(axiosConfig.baseURL);
+    const preparedData = setZeroScore(data);
+    setList(
+      sortListByOrder(preparedData, sortValue).map((item, index) => ({
+        ...item,
+        position: index + 1,
+      }))
+    );
+  }
 
-    return (
-        <>
-            <div className={s.board}>
-                <Controls
-                    sortListByOrder={SortList}
-                />
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Position</th>
-                            <th>Leader</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {list ? list.map((leader, index) => (
-                            <Leader leader={leader} number={ordinalSuffixOf(index + 1)} key={leader.name} />
-                        )) : <></>}
-                    </tbody>
-                </table>
-            </div>
-        </>
-    )
-}
+  const sortList = () => {
+    const newSortValue = reverseOrderType(sortValue);
+    setSortValue(newSortValue);
+    setList(sortListByOrder(list, newSortValue));
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return (
+    <div className={s.board}>
+      <Controls sortListByOrder={sortList} />
+      <table>
+        <thead>
+          <tr>
+            <th>Position</th>
+            <th>Leader</th>
+            <th>Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {list ? (
+            list.map(leader => <Leader leader={leader} number={ordinalSuffixOf(leader.position)} key={leader.name} />)
+          ) : (
+            <> </>
+          )}
+        </tbody>
+      </table>
+    </div>
+  );
+};

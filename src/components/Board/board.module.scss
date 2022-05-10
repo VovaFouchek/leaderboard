@@ -1,39 +1,39 @@
 .board {
-    border: 1px solid #80808096;
-    border-radius: 0.6rem;
-    overflow: hidden;
+  border: 1px solid #80808096;
+  border-radius: 0.6rem;
+  overflow: hidden;
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
+  table {
+    width: 100%;
+    border-collapse: collapse;
 
-        thead {
-            background: rgb(210, 210, 210);
+    thead {
+      background: rgb(210, 210, 210);
 
-            th {
-                font-size: 1.5rem;
-                font-family: sans-serif;
+      th {
+        font-size: 1.5rem;
+        font-family: sans-serif;
 
-                &:first-child{
-                    width: 15%;
-                }
-            }
+        &:first-child {
+          width: 15%;
         }
-
-        tbody {
-            tr {
-                border-bottom: 1px solid #8080803d;
-                text-align: center;
-
-                &:last-child {
-                    border-bottom: 0;
-                }
-
-                td {
-                    font-size: 1.3rem;
-                    padding: 5px;
-                }
-            }
-        }
+      }
     }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid #8080803d;
+        text-align: center;
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        td {
+          font-size: 1.3rem;
+          padding: 5px;
+        }
+      }
+    }
+  }
 }
