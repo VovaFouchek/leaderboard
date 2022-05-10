@@ -16,16 +16,33 @@ export const Board = () => {
     return data.map(item => (!item.score ? { ...item, score: 0 } : item));
   };
 
-  async function getData() {
+  const getData = async () => {
     const { data } = await instance.get(axiosConfig.baseURL);
     const preparedData = setZeroScore(data);
     setList(
       sortListByOrder(preparedData, sortValue).map((item, index) => ({
         ...item,
         position: index + 1,
+        id: index,
       }))
     );
-  }
+  };
+
+  const editList = editLeader => {
+    const newList = list.map(leader => {
+      if (leader.id === editLeader.id) {
+        return editLeader;
+      }
+      return leader;
+    });
+
+    const newListWithPositions = sortListByOrder(newList, orderTypes.ascending).map((item, index) => ({
+      ...item,
+      position: index + 1,
+    }));
+
+    setList(sortListByOrder(newListWithPositions, sortValue));
+  };
 
   const sortList = () => {
     const newSortValue = reverseOrderType(sortValue);
@@ -46,11 +63,14 @@ export const Board = () => {
             <th>Position</th>
             <th>Leader</th>
             <th>Score</th>
+            <th>Editing</th>
           </tr>
         </thead>
         <tbody>
           {list ? (
-            list.map(leader => <Leader leader={leader} number={ordinalSuffixOf(leader.position)} key={leader.name} />)
+            list.map(leader => (
+              <Leader leader={leader} editList={editList} number={ordinalSuffixOf(leader.position)} key={leader.name} />
+            ))
           ) : (
             <> </>
           )}

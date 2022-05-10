@@ -5,7 +5,7 @@ export const Controls = ({ sortListByOrder }) => {
   return (
     <div className={s.wrapControl}>
       <strong>Leaders table for this period</strong>
-      <button type="submit" onClick={sortListByOrder}>
+      <button type="button" onClick={sortListByOrder}>
         Sort by
       </button>
     </div>
