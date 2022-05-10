@@ -32,6 +32,11 @@
         td {
           font-size: 1.3rem;
           padding: 5px;
+
+          svg {
+            cursor: pointer;
+            opacity: 0.5;
+          }
         }
       }
     }
