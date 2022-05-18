@@ -30,3 +30,11 @@ export const sortListByOrder = (list, sortValue) => {
     return b.score - a.score;
   });
 };
+
+export const updateList = (data, setList, sortValue) => {
+  const sortNewMemberPositions = sortListByOrder(data, orderTypes.ascending).map((item, index) => ({
+    ...item,
+    position: index + 1,
+  }));
+  setList(sortListByOrder(sortNewMemberPositions, sortValue));
+};

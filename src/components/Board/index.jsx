@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
+import uniqid from 'uniqid';
 
 import { Leader } from '../Leader';
 import instance, { axiosConfig } from '../API';
-import { ordinalSuffixOf, sortListByOrder, reverseOrderType } from '../../helpers/functions';
+import { ordinalSuffixOf, sortListByOrder, reverseOrderType, updateList } from '../../helpers/functions';
 import { orderTypes } from '../../helpers/consts';
 
 import { Controls } from '../Controls';
@@ -19,11 +20,12 @@ export const Board = () => {
   const getData = async () => {
     const { data } = await instance.get(axiosConfig.baseURL);
     const preparedData = setZeroScore(data);
+    const sortedList = sortListByOrder(preparedData, sortValue);
     setList(
-      sortListByOrder(preparedData, sortValue).map((item, index) => ({
+      sortedList.map((item, index) => ({
         ...item,
         position: index + 1,
-        id: index,
+        id: uniqid(),
       }))
     );
   };
@@ -35,13 +37,12 @@ export const Board = () => {
       }
       return leader;
     });
+    updateList(newList, setList, sortValue);
+  };
 
-    const newListWithPositions = sortListByOrder(newList, orderTypes.ascending).map((item, index) => ({
-      ...item,
-      position: index + 1,
-    }));
-
-    setList(sortListByOrder(newListWithPositions, sortValue));
+  const addList = values => {
+    const addNewMember = [...list, { ...values, position: list.length + 1, id: uniqid() }];
+    updateList(addNewMember, setList, sortValue);
   };
 
   const sortList = () => {
@@ -56,7 +57,7 @@ export const Board = () => {
 
   return (
     <div className={s.board}>
-      <Controls sortListByOrder={sortList} />
+      <Controls sortListByOrder={sortList} addList={addList} />
       <table>
         <thead>
           <tr>
@@ -69,7 +70,7 @@ export const Board = () => {
         <tbody>
           {list ? (
             list.map(leader => (
-              <Leader leader={leader} editList={editList} number={ordinalSuffixOf(leader.position)} key={leader.name} />
+              <Leader leader={leader} editList={editList} number={ordinalSuffixOf(leader.position)} key={leader.id} />
             ))
           ) : (
             <> </>
