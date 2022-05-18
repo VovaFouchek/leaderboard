@@ -3,15 +3,20 @@ import uniqid from 'uniqid';
 
 import { Leader } from '../Leader';
 import instance, { axiosConfig } from '../API';
-import { ordinalSuffixOf, sortListByOrder, reverseOrderType, updateList } from '../../helpers/functions';
+import {
+  ordinalSuffixOf,
+  sortListByOrder,
+  reverseOrderType,
+  refreshList,
+  getRandomPhoto,
+} from '../../helpers/functions';
 import { orderTypes } from '../../helpers/consts';
-
 import { Controls } from '../Controls';
+
 import s from './board.module.scss';
 
-export const Board = () => {
-  const [list, setList] = useState([]);
-  const [sortValue, setSortValue] = useState(orderTypes.ascending);
+export const Board = ({ list, setList }) => {
+  const [sortType, setsortType] = useState(orderTypes.ascending);
 
   const setZeroScore = data => {
     return data.map(item => (!item.score ? { ...item, score: 0 } : item));
@@ -20,35 +25,37 @@ export const Board = () => {
   const getData = async () => {
     const { data } = await instance.get(axiosConfig.baseURL);
     const preparedData = setZeroScore(data);
-    const sortedList = sortListByOrder(preparedData, sortValue);
+    const sortedList = sortListByOrder(preparedData, sortType);
     setList(
       sortedList.map((item, index) => ({
         ...item,
         position: index + 1,
         id: uniqid(),
+        picture: getRandomPhoto(),
       }))
     );
   };
 
-  const editList = editLeader => {
+  const editLeaderInList = editLeader => {
     const newList = list.map(leader => {
       if (leader.id === editLeader.id) {
         return editLeader;
       }
       return leader;
     });
-    updateList(newList, setList, sortValue);
+    setList(refreshList(newList, sortType));
   };
 
-  const addList = values => {
-    const addNewMember = [...list, { ...values, position: list.length + 1, id: uniqid() }];
-    updateList(addNewMember, setList, sortValue);
+  const addLeaderInList = values => {
+    const newList = { ...values, position: list.length + 1, id: uniqid(), picture: getRandomPhoto() };
+    const listWithNewLeader = [...list, newList];
+    setList(refreshList(listWithNewLeader, sortType));
   };
 
   const sortList = () => {
-    const newSortValue = reverseOrderType(sortValue);
-    setSortValue(newSortValue);
-    setList(sortListByOrder(list, newSortValue));
+    const newsortType = reverseOrderType(sortType);
+    setsortType(newsortType);
+    setList(sortListByOrder(list, newsortType));
   };
 
   useEffect(() => {
@@ -57,11 +64,12 @@ export const Board = () => {
 
   return (
     <div className={s.board}>
-      <Controls sortListByOrder={sortList} addList={addList} />
+      <Controls sortListByOrder={sortList} addLeaderInList={addLeaderInList} />
       <table>
         <thead>
           <tr>
             <th>Position</th>
+            <th>Photo</th>
             <th>Leader</th>
             <th>Score</th>
             <th>Editing</th>
@@ -70,7 +78,12 @@ export const Board = () => {
         <tbody>
           {list ? (
             list.map(leader => (
-              <Leader leader={leader} editList={editList} number={ordinalSuffixOf(leader.position)} key={leader.id} />
+              <Leader
+                leader={leader}
+                editLeaderInList={editLeaderInList}
+                number={ordinalSuffixOf(leader.position)}
+                key={leader.id}
+              />
             ))
           ) : (
             <> </>

@@ -1,19 +1,18 @@
 .banner {
-  display: flex;
-  justify-content: space-between;
   background: #8201d0;
-  max-height: 200px;
-  height: 100%;
   border-radius: 0.6rem;
   margin-top: 10px;
-  padding: 20px 20px 0 20px;
+  padding: 20px;
   position: relative;
   overflow: hidden;
+  min-height: 240px;
 
   .text {
     color: #fff;
+    margin-bottom: 20px;
   }
-  img {
+
+  .banner__img {
     width: 100%;
     object-fit: contain;
     max-width: 300px;
@@ -30,4 +29,13 @@
   text-align: center;
   padding: 1rem 0;
   font-weight: 400;
+}
+
+.container__card {
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 680px;
+  width: 100%;
 }
