@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input, InputLabel, Button } from '@mui/material';
 
-export const EditForm = ({ leader, handleClose, editList }) => {
+export const EditForm = ({ leader, handleClose, editLeaderInList }) => {
   const [values, setValues] = useState(leader);
 
   const handleChange = e => {
@@ -13,7 +13,7 @@ export const EditForm = ({ leader, handleClose, editList }) => {
 
   const onSubmit = e => {
     e.preventDefault();
-    editList(values);
+    editLeaderInList(values);
     handleClose();
   };
 

@@ -3,7 +3,7 @@ import { AddForm } from '../AddForm';
 import { BasicModal } from '../BasicModal';
 import s from './controls.module.scss';
 
-export const Controls = ({ sortListByOrder, addList }) => {
+export const Controls = ({ sortListByOrder, addLeaderInList }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -18,7 +18,7 @@ export const Controls = ({ sortListByOrder, addList }) => {
         Add new member
       </button>
       <BasicModal handleClose={handleClose} open={open}>
-        <AddForm handleClose={handleClose} addList={addList} />
+        <AddForm handleClose={handleClose} addLeaderInList={addLeaderInList} />
       </BasicModal>
     </div>
   );
