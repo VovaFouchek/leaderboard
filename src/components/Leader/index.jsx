@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PropTypes from 'prop-types';
 import { BsPencil } from 'react-icons/bs';
 
 import { BasicModal } from '../BasicModal';
@@ -27,4 +28,12 @@ export const Leader = ({ leader, number, editLeaderInList }) => {
       </td>
     </tr>
   );
+};
+
+Leader.propTypes = {
+  leader: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+  }),
+  number: PropTypes.string.isRequired,
+  editLeaderInList: PropTypes.func.isRequired,
 };

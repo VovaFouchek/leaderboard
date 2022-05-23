@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Input, InputLabel, Button } from '@mui/material';
 
-export const EditForm = ({ leader, handleClose, editLeaderInList }) => {
+export const EditForm = ({ leader = { name: '', score: 0 }, handleClose, editLeaderInList }) => {
   const [values, setValues] = useState(leader);
 
   const handleChange = e => {
@@ -44,4 +45,13 @@ export const EditForm = ({ leader, handleClose, editLeaderInList }) => {
       </Button>
     </form>
   );
+};
+
+EditForm.propTypes = {
+  leader: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
+  }),
+  handleClose: PropTypes.func.isRequired,
+  editLeaderInList: PropTypes.func.isRequired,
 };

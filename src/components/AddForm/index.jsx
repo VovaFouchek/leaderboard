@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Input, InputLabel, Button } from '@mui/material';
 
 export const AddForm = ({ addLeaderInList, handleClose }) => {
@@ -10,7 +11,6 @@ export const AddForm = ({ addLeaderInList, handleClose }) => {
       [e.target.name]: e.target.value,
     });
   };
-
   const onSubmit = e => {
     e.preventDefault();
     addLeaderInList(values);
@@ -43,4 +43,9 @@ export const AddForm = ({ addLeaderInList, handleClose }) => {
       </Button>
     </form>
   );
+};
+
+AddForm.propTypes = {
+  addLeaderInList: PropTypes.func.isRequired,
+  handleClose: PropTypes.func.isRequired,
 };
