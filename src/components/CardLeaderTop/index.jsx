@@ -1,6 +1,6 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import s from './cardLeaderTop.module.scss';
-import { getRandomPhoto } from '../../helpers/functions.js';
 
 export const CardLeaderTop = ({ leader }) => {
   return (
@@ -10,4 +10,11 @@ export const CardLeaderTop = ({ leader }) => {
       <p>{leader.name}</p>
     </div>
   );
+};
+
+CardLeaderTop.propTypes = {
+  leader: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
+  }),
 };

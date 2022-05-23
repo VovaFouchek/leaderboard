@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Modal, Box } from '@mui/material';
 
 export const BasicModal = ({ open, handleClose, children }) => {
@@ -27,4 +28,10 @@ export const BasicModal = ({ open, handleClose, children }) => {
       <Box sx={style}>{children}</Box>
     </Modal>
   );
+};
+
+BasicModal.propTypes = {
+  open: PropTypes.bool.isRequired,
+  handleClose: PropTypes.func.isRequired,
+  children: PropTypes.node.isRequired,
 };

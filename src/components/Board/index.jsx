@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import uniqid from 'uniqid';
 
 import { Leader } from '../Leader';
@@ -92,4 +93,9 @@ export const Board = ({ list, setList }) => {
       </table>
     </div>
   );
+};
+
+Board.propTypes = {
+  list: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  setList: PropTypes.func.isRequired,
 };

@@ -38,7 +38,8 @@
         "unnamedComponents": "arrow-function"
       }
     ],
-    "no-unused-vars": ["warn", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }]
+    "no-unused-vars": ["warn", { "vars": "all", "args": "after-used", "ignoreRestSiblings": false }],
+    "react/require-default-props": "off"
   },
   "settings": {
     "import/resolver": {

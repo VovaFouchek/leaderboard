@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
 import { CardLeaderTop } from '../CardLeaderTop';
 import { getLeaderTop } from '../../helpers/functions';
 
@@ -24,4 +25,8 @@ export const Header = ({ list }) => {
       <h1 className={s.title}>LeaderBoard:</h1>
     </>
   );
+};
+
+Header.propTypes = {
+  list: PropTypes.arrayOf(PropTypes.shape).isRequired,
 };
