@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Input, InputLabel, Button } from '@mui/material';
 
-export const EditForm = ({ leader = { name: '', score: 0 }, handleClose, editLeaderInList }) => {
+const leaderDefaultValue = { name: '', score: 0, position: 0, id: '', picture: '' };
+
+export const EditForm = ({ leader = leaderDefaultValue, handleClose, editLeaderInList }) => {
   const [values, setValues] = useState(leader);
 
   const handleChange = e => {
@@ -14,7 +16,10 @@ export const EditForm = ({ leader = { name: '', score: 0 }, handleClose, editLea
 
   const onSubmit = e => {
     e.preventDefault();
-    editLeaderInList(values);
+    editLeaderInList({
+      ...values,
+      score: +values.score,
+    });
     handleClose();
   };
 

@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import s from './cardLeaderTop.module.scss';
 
-export const CardLeaderTop = ({ leader }) => {
+const leaderDefaultValue = { name: '', score: 0, position: 0, id: '', picture: '' };
+
+export const CardLeaderTop = ({ leader = leaderDefaultValue }) => {
   return (
     <div className={s.card}>
       <img src={leader.picture} alt="avatar" />
