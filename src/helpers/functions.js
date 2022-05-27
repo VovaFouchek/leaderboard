@@ -53,7 +53,7 @@ export const getRandomPhoto = () => {
   ];
   const randomPicture = pictures[Math.floor(Math.random() * pictures.length)];
   /* eslint-disable */
-  return require(`../images/people/${randomPicture}.jpeg`);
+  return `/images/people/${randomPicture}.jpeg`;
 };
 
 export const getLeaderTop = listOfLeaders => {

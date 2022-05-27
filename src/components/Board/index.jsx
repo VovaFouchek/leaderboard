@@ -5,7 +5,7 @@ import uniqid from 'uniqid';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 import { Leader } from '../Leader';
-import instance, { axiosConfig } from '../API';
+import instance, { axiosConfig } from '../../shared/api/config/axios';
 import { orderTypes } from '../../helpers/consts';
 import { Controls } from '../Controls';
 import * as helpersFuncions from '../../helpers/functions';

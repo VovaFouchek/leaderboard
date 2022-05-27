@@ -2,10 +2,9 @@ import { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
-import { CardLeaderTop } from '../CardLeaderTop';
+import { CardLeaderTop } from '../../shared/components/CardLeaderTop';
 import { getLeaderTop } from '../../helpers/functions';
 
-import image from '../../images/business-people.svg';
 import s from './header.module.scss';
 
 export const Header = ({ list = [] }) => {
@@ -32,7 +31,7 @@ export const Header = ({ list = [] }) => {
             </Box>
           )}
         </div>
-        <img className={s.bg__img} src={image} alt="Business people" />
+        <img className={s.bg__img} src="images/people/business-people.svg" alt="Business people" />
       </div>
       <h1 className={s.title}>LeaderBoard:</h1>
     </>

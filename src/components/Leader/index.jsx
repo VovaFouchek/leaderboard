@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import { BsPencil } from 'react-icons/bs';
 import { pathRouters } from '../../utility/pathRouters';
 
-import { BasicModal } from '../BasicModal';
+import { BasicModal } from '../../shared/components/BasicModal';
 import { EditForm } from '../EditForm';
 
 import s from './leader.module.scss';
