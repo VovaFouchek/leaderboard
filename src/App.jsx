@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
-import { Wrapper } from './components/Wrapper';
+import { Wrapper } from './shared/components/Wrapper';
 import { Header } from './components/Header';
 import { Board } from './components/Board';
 import { LeaderProfile } from './components/LeaderProfile';

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { AddForm } from '../AddForm';
-import { BasicModal } from '../BasicModal';
+import { BasicModal } from '../../shared/components/BasicModal';
 import s from './controls.module.scss';
 
 export const Controls = ({ sortListByOrder, addLeaderInList }) => {
