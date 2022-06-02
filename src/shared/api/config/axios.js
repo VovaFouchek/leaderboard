@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 export const axiosConfig = {
-  baseURL: 'http://coding-test.cube19.io/frontend/v1/starting-state',
+  baseURL: 'http://localhost:3001',
 };
 
 const instance = axios.create(axiosConfig);

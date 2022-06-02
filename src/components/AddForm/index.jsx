@@ -4,7 +4,7 @@ import { Input, InputLabel, Button } from '@mui/material';
 import { createLeader } from '../../shared/api/requests/leaders';
 
 export const AddForm = ({ addLeaderInList, handleClose }) => {
-  const [values, setValues] = useState({ name: '', score: 0 });
+  const [values, setValues] = useState({ name: '', score: 0, picture: '' });
 
   const handleChange = e => {
     setValues({
@@ -12,20 +12,18 @@ export const AddForm = ({ addLeaderInList, handleClose }) => {
       [e.target.name]: e.target.value,
     });
   };
+
   const onSubmit = async e => {
     e.preventDefault();
     const leaderResponse = await createLeader(values);
-    const leaderName = Object.values(leaderResponse).join('');
-    try {
-      if (leaderName === values.name) {
-        addLeaderInList({
-          ...values,
-          score: +values.score,
-        });
-      }
-    } catch (error) {
-      console.log(error);
+    if (leaderResponse) {
+      addLeaderInList({
+        ...leaderResponse,
+        score: +leaderResponse.score,
+        id: leaderResponse.id,
+      });
     }
+
     handleClose();
   };
   return (

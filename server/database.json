@@ -1,0 +1,40 @@
+{
+  "leaders": [
+    {
+      "name": "fred",
+      "score": 4,
+      "id": "l3vbsvh7",
+      "picture": "Sofia-Vergara"
+    },
+    {
+      "name": "chris",
+      "score": 1,
+      "id": "l3vbsvh9",
+      "picture": "Sofia-Vergara"
+    },
+    {
+      "name": "elena",
+      "score": 3,
+      "picture": "Tom-Holland",
+      "id": "l3vbsvha"
+    },
+    {
+      "name": "grace",
+      "score": 70,
+      "id": "l3vbsvhb",
+      "picture": "Gal-Gadot"
+    },
+    {
+      "name": "harriet",
+      "score": 10,
+      "id": "l3vbsvhc",
+      "picture": "Sofia-Vergara"
+    },
+    {
+      "name": "dom",
+      "score": 2,
+      "id": "l3vbsvhv",
+      "picture": "Sofia-Vergara"
+    }
+  ]
+}

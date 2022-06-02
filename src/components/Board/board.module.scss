@@ -6,6 +6,7 @@
   table {
     width: 100%;
     border-collapse: collapse;
+    min-height: 200px;
 
     thead {
       background: rgb(210, 210, 210);
@@ -22,7 +23,6 @@
     }
 
     tbody {
-      height: 450px;
       tr {
         border-bottom: 1px solid #8080803d;
         text-align: center;
