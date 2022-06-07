@@ -51,10 +51,10 @@ export const getRandomPhoto = () => {
     'Sofia-Vergara',
     'Margot-Robbie',
   ];
-  const randomPicture = pictures[Math.floor(Math.random() * pictures.length)];
-  /* eslint-disable */
-  return `/images/people/${randomPicture}.jpeg`;
+  return pictures[Math.floor(Math.random() * pictures.length)];
 };
+
+export const getImagePath = picture => `/images/people/${picture}.jpeg`;
 
 export const getLeaderTop = listOfLeaders => {
   const COUNT_LEADER_TOP = 4;

@@ -1,3 +1,12 @@
+.inner {
+  padding: 50px;
+  background: aliceblue;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
 .wrapper {
   margin-top: 3rem;
   width: 100%;
@@ -22,4 +31,5 @@
 
 .title {
   text-align: center;
+  margin-bottom: 30px;
 }

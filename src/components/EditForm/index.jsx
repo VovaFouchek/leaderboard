@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Input, InputLabel, Button } from '@mui/material';
+import { updateLeader } from '../../shared/api/requests/leaders';
 
 const leaderDefaultValue = { name: '', score: 0, position: 0, id: '', picture: '' };
 
@@ -14,12 +15,15 @@ export const EditForm = ({ leader = leaderDefaultValue, handleClose, editLeaderI
     });
   };
 
-  const onSubmit = e => {
+  const onSubmit = async e => {
     e.preventDefault();
-    editLeaderInList({
-      ...values,
-      score: +values.score,
-    });
+    const leaderResponse = await updateLeader(values);
+    if (leaderResponse) {
+      editLeaderInList({
+        ...leaderResponse,
+        score: +leaderResponse.score,
+      });
+    }
     handleClose();
   };
 

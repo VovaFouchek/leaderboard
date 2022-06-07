@@ -5,6 +5,7 @@ import { pathRouters } from '../../utility/pathRouters';
 
 import { BasicModal } from '../../shared/components/BasicModal';
 import { EditForm } from '../EditForm';
+import { getImagePath } from '../../helpers/functions';
 
 import s from './leader.module.scss';
 
@@ -21,7 +22,7 @@ export const Leader = ({ leader = leaderDefaultValue, position = '', editLeaderI
       <td className={s.position}>{position}</td>
       <td className={s.photo}>
         <img
-          src={leader.picture}
+          src={getImagePath(leader.picture)}
           aria-hidden="true"
           onClick={() => {
             routers.setPath(leader.id);

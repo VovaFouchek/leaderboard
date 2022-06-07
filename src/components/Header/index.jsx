@@ -12,10 +12,6 @@ export const Header = ({ list = [] }) => {
 
   useEffect(() => {
     setleaderTop(getLeaderTop(list));
-    if (list.length > 0) {
-      localStorage.setItem('TopLeaders', JSON.stringify(getLeaderTop(list)));
-    }
-    setleaderTop(JSON.parse(localStorage.getItem('TopLeaders')));
   }, [list]);
 
   return (
