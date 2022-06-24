@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { editLeader } from 'redux/reducer';
 import PropTypes from 'prop-types';
+
 import { Input, InputLabel, Button } from '@mui/material';
-import { updateLeader } from '../../shared/api/requests/leaders';
+import { updateLeader } from 'shared/api/requests/leaders';
 
 const leaderDefaultValue = { name: '', score: 0, position: 0, id: '', picture: '' };
 
-export const EditForm = ({ leader = leaderDefaultValue, handleClose, editLeaderInList }) => {
+const EditForm = ({ leader = leaderDefaultValue, handleClose }) => {
   const [values, setValues] = useState(leader);
+  const dispatch = useDispatch();
+  const sortType = useSelector(state => state.leader);
+
+  const editLeaderInList = leaderData => dispatch(editLeader(leaderData, sortType));
 
   const handleChange = e => {
     setValues({
@@ -62,5 +69,6 @@ EditForm.propTypes = {
     score: PropTypes.number.isRequired,
   }),
   handleClose: PropTypes.func.isRequired,
-  editLeaderInList: PropTypes.func.isRequired,
 };
+
+export default EditForm;

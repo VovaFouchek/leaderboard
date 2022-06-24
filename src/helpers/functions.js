@@ -15,10 +15,7 @@ export const ordinalSuffixOf = i => {
   return `${i}th`;
 };
 
-export const reverseOrderType = sortType =>
-  sortType === orderTypes.ascending ? orderTypes.descending : orderTypes.ascending;
-
-export const sortListByOrder = (list, sortType) => {
+export const sortListByOrder = (list, sortType = orderTypes.ascending) => {
   if (sortType === orderTypes.descending) {
     return list.sort((a, b) => {
       if (a.score === b.score) return b.name > a.name ? 1 : -1;
@@ -31,15 +28,8 @@ export const sortListByOrder = (list, sortType) => {
   });
 };
 
-export const refreshList = (list, sortType) => {
-  const sortNewMemberPositions = sortListByOrder(list, sortType).map((item, index) => {
-    if (sortType === orderTypes.ascending) {
-      return { ...item, position: index + 1 };
-    }
-    return { ...item, position: list.length - index };
-  });
-  return sortNewMemberPositions;
-};
+export const reverseOrderType = sortType =>
+  sortType === orderTypes.ascending ? orderTypes.descending : orderTypes.ascending;
 
 export const getRandomPhoto = () => {
   const pictures = [
@@ -58,6 +48,10 @@ export const getImagePath = picture => `/images/people/${picture}.jpeg`;
 
 export const getLeaderTop = listOfLeaders => {
   const COUNT_LEADER_TOP = 4;
-  const newList = listOfLeaders.filter(leader => leader.position <= COUNT_LEADER_TOP);
-  return sortListByOrder(newList, orderTypes.ascending);
+  const filteredLeadersList = listOfLeaders.filter(leader => leader.position <= COUNT_LEADER_TOP);
+  return sortListByOrder(filteredLeadersList);
+};
+
+export const setZeroScore = data => {
+  return data.map(item => (!item.score ? { ...item, score: 0 } : item));
 };

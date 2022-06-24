@@ -1,3 +1,5 @@
+import { axiosConfig } from './axios';
+
 export const API = {
-  LEADERS: '/leaders',
+  LEADERS: `${axiosConfig.baseURL}/leaders`,
 };

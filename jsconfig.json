@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": ["es5", "dom", "dom.iterable", "esnext"],
+    "jsx": "react-jsx",
+    "baseUrl": "src"
+  },
+  "include": ["src"]
+}

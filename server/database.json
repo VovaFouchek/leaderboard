@@ -2,39 +2,39 @@
   "leaders": [
     {
       "name": "fred",
-      "score": 4,
+      "score": 10,
       "id": "l3vbsvh7",
-      "picture": "Sofia-Vergara"
+      "picture": "Angelina-Jolie"
     },
     {
       "name": "chris",
-      "score": 1,
+      "score": 200,
       "id": "l3vbsvh9",
       "picture": "Sofia-Vergara"
     },
     {
       "name": "elena",
-      "score": 3,
+      "score": 30,
       "picture": "Tom-Holland",
       "id": "l3vbsvha"
     },
     {
       "name": "grace",
-      "score": 70,
+      "score": 150,
       "id": "l3vbsvhb",
       "picture": "Gal-Gadot"
     },
     {
       "name": "harriet",
-      "score": 10,
+      "score": 55,
       "id": "l3vbsvhc",
-      "picture": "Sofia-Vergara"
+      "picture": "Margot-Robbie"
     },
     {
       "name": "dom",
-      "score": 2,
+      "score": 85,
       "id": "l3vbsvhv",
-      "picture": "Sofia-Vergara"
+      "picture": "Ryan-Reynolds"
     }
   ]
 }

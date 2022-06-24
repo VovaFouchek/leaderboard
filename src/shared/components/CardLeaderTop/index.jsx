@@ -1,6 +1,5 @@
-import React from 'react';
 import PropTypes from 'prop-types';
-import { getImagePath } from '../../../helpers/functions';
+import { getImagePath } from 'helpers/functions';
 import s from './cardLeaderTop.module.scss';
 
 const leaderDefaultValue = { name: '', score: 0, position: 0, id: '', picture: '' };

@@ -29,6 +29,13 @@
       "warn",
       { "devDependencies": true, "optionalDependencies": true, "peerDependencies": true }
     ],
+    "no-param-reassign": [
+      "error",
+      {
+        "props": true,
+        "ignorePropertyModificationsFor": ["state"]
+      }
+    ],
     "import/no-unresolved": "off",
     "react/prop-types": ["off"],
     "react/function-component-definition": [
@@ -45,6 +52,7 @@
   "settings": {
     "import/resolver": {
       "node": {
+        "moduleDirectory": ["node_modules", "src/"],
         "extensions": [".js", ".jsx"]
       }
     }
