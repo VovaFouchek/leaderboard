@@ -1,10 +1,17 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Input, InputLabel, Button } from '@mui/material';
-import { createLeader } from '../../shared/api/requests/leaders';
 
-export const AddForm = ({ addLeaderInList, handleClose }) => {
-  const [values, setValues] = useState({ name: '', score: 0, picture: '' });
+import { Input, InputLabel, Button } from '@mui/material';
+import { createLeader } from 'shared/api/requests/leaders';
+import { addLeader } from 'redux/reducer';
+
+const AddForm = ({ handleClose }) => {
+  const [values, setValues] = useState({ name: '', score: 0 });
+  const dispatch = useDispatch();
+  const sortType = useSelector(state => state.leader);
+
+  const addLeaderInList = leaderData => dispatch(addLeader(leaderData, sortType));
 
   const handleChange = e => {
     setValues({
@@ -56,6 +63,7 @@ export const AddForm = ({ addLeaderInList, handleClose }) => {
 };
 
 AddForm.propTypes = {
-  addLeaderInList: PropTypes.func.isRequired,
   handleClose: PropTypes.func.isRequired,
 };
+
+export default AddForm;

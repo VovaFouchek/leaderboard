@@ -1,38 +1,37 @@
-import axios, { axiosConfig } from '../config/axios';
+import { getRandomPhoto } from 'helpers/functions';
+import axios from '../config/axios';
 import { API } from '../config/leaders.api';
 
-export const getLeaders = async () => {
+export const getLeaderByID = async id => {
   try {
-    const response = await axios.get(`${axiosConfig.baseURL}${API.LEADERS}`);
+    const response = await axios.get(`${API.LEADERS}/${id}`);
     return response.data;
   } catch (error) {
-    return null;
+    throw new Error(error);
   }
 };
 
 export const createLeader = async data => {
   try {
-    const response = await axios.post(`${axiosConfig.baseURL}${API.LEADERS}`, {
+    const response = await axios.post(`${API.LEADERS}`, {
       name: data.name,
       score: +data.score,
-      picture: data.picture,
+      picture: getRandomPhoto() || 'default__avatar',
     });
     return response.data;
   } catch (error) {
-    console.error(error);
-    return null;
+    throw new Error(error);
   }
 };
 
 export const updateLeader = async data => {
   try {
-    const response = await axios.patch(`${axiosConfig.baseURL}${API.LEADERS}/${data.id}`, {
+    const response = await axios.patch(`${API.LEADERS}/${data.id}`, {
       name: data.name,
       score: +data.score,
     });
     return response.data;
   } catch (error) {
-    console.error(error);
-    return null;
+    throw new Error(error);
   }
 };

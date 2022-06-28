@@ -1,20 +1,20 @@
 import { useState } from 'react';
 import PropTypes from 'prop-types';
+
 import { BsPencil } from 'react-icons/bs';
-import { pathRouters } from '../../utility/pathRouters';
-
-import { BasicModal } from '../../shared/components/BasicModal';
-import { EditForm } from '../EditForm';
-import { getImagePath } from '../../helpers/functions';
-
+import { BasicModal } from 'shared/components/BasicModal';
+import { getImagePath, ordinalSuffixOf } from 'helpers/functions';
+import { pathRouters } from 'utility/pathRouters';
+import EditForm from 'components/EditForm';
 import s from './leader.module.scss';
 
 const leaderDefaultValue = { name: '', score: 0, position: 0, id: '', picture: '' };
 
-export const Leader = ({ leader = leaderDefaultValue, position = '', editLeaderInList }) => {
+const Leader = ({ leader = leaderDefaultValue }) => {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const position = ordinalSuffixOf(leader.position);
   const routers = pathRouters();
 
   return (
@@ -44,7 +44,7 @@ export const Leader = ({ leader = leaderDefaultValue, position = '', editLeaderI
       <td className={s.edit}>
         <BsPencil onClick={handleOpen} />
         <BasicModal handleClose={handleClose} open={open}>
-          <EditForm leader={leader} handleClose={handleClose} editLeaderInList={editLeaderInList} />
+          <EditForm leader={leader} handleClose={handleClose} />
         </BasicModal>
       </td>
     </tr>
@@ -54,7 +54,11 @@ export const Leader = ({ leader = leaderDefaultValue, position = '', editLeaderI
 Leader.propTypes = {
   leader: PropTypes.shape({
     name: PropTypes.string.isRequired,
+    score: PropTypes.number.isRequired,
+    position: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
+    picture: PropTypes.string.isRequired,
   }),
-  position: PropTypes.string.isRequired,
-  editLeaderInList: PropTypes.func.isRequired,
 };
+
+export default Leader;

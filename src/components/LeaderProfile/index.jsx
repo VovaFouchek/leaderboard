@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { getImagePath } from '../../helpers/functions';
-import { getLeaders } from '../../shared/api/requests/leaders';
-import { pathRouters } from '../../utility/pathRouters';
+
+import { getImagePath } from 'helpers/functions';
+import { getLeaderByID } from 'shared/api/requests/leaders';
+import { pathRouters } from 'utility/pathRouters';
 import s from './leaderProfile.module.scss';
 
-export const LeaderProfile = () => {
+const leaderDefaultValue = { name: '', score: '0', picture: 'default__avatar' };
+
+const LeaderProfile = () => {
   const { id } = useParams();
   const routers = pathRouters();
-  const [leaderInfo, setLeaderInfo] = useState('');
+  const [leaderInfo, setLeaderInfo] = useState(leaderDefaultValue);
 
-  const getData = async () => {
-    const leadersList = await getLeaders();
-    const leader = leadersList.find(item => item.id === id);
+  const getDataLeaderProfile = async leaderID => {
+    const leader = await getLeaderByID(leaderID);
     setLeaderInfo(leader);
   };
 
   useEffect(() => {
-    getData();
+    getDataLeaderProfile(id);
   }, []);
 
   return (
@@ -41,3 +43,5 @@ export const LeaderProfile = () => {
     </div>
   );
 };
+
+export default LeaderProfile;
