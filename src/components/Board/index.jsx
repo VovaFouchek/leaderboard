@@ -4,17 +4,20 @@ import { useDispatch, useSelector } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
-import { fetchLeaders } from 'redux/actions';
 import { Header, Controls, Leader } from 'components';
+import { fetchLeaders } from 'redux/leader/actions';
+import { getHistory } from 'redux/history/actions';
 import s from './board.module.scss';
 
 const Board = () => {
   const dispatch = useDispatch();
   const { leaders, isLoading } = useSelector(state => state.leader);
+  const { historyItems, day } = useSelector(state => state.history);
 
   useEffect(() => {
     dispatch(fetchLeaders());
-  }, []);
+    dispatch(getHistory());
+  }, [dispatch]);
 
   return (
     <>
@@ -28,7 +31,8 @@ const Board = () => {
               <th>Photo</th>
               <th>Leader</th>
               <th>Score</th>
-              <th>Editing</th>
+              {day === historyItems.length && <th>Editing</th>}
+              <th>Position</th>
             </tr>
           </thead>
           <tbody>

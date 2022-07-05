@@ -17,13 +17,16 @@ export const ordinalSuffixOf = i => {
 
 export const sortListByOrder = (list, sortType = orderTypes.ascending) => {
   if (sortType === orderTypes.descending) {
-    return list.sort((a, b) => {
+    return [...list].sort((a, b) => {
       if (a.score === b.score) return b.name > a.name ? 1 : -1;
       return a.score - b.score;
     });
   }
-  return list.sort((a, b) => {
-    if (a.score === b.score) return a.name > b.name ? 1 : -1;
+
+  return [...list].sort((a, b) => {
+    if (a.score === b.score) {
+      return a.name > b.name ? 1 : -1;
+    }
     return b.score - a.score;
   });
 };
@@ -55,3 +58,5 @@ export const getLeaderTop = listOfLeaders => {
 export const setZeroScore = data => {
   return data.map(item => (!item.score ? { ...item, score: 0 } : item));
 };
+
+export const sortValues = (data, property) => [...data].sort((a, b) => a[property] - b[property]);

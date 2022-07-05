@@ -1,17 +1,21 @@
-import React, { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { Input, InputLabel, Button } from '@mui/material';
 import { createLeader } from 'shared/api/requests/leaders';
-import { addLeader } from 'redux/reducer';
+import { addLeader } from 'redux/leader/reducer';
+import { setLeadersOfCurrentDay } from 'redux/history/reducer';
 
 const AddForm = ({ handleClose }) => {
   const [values, setValues] = useState({ name: '', score: 0 });
   const dispatch = useDispatch();
-  const sortType = useSelector(state => state.leader);
-
+  const { leaders, sortType } = useSelector(state => state.leader);
   const addLeaderInList = leaderData => dispatch(addLeader(leaderData, sortType));
+
+  useEffect(() => {
+    dispatch(setLeadersOfCurrentDay(leaders));
+  }, [leaders]);
 
   const handleChange = e => {
     setValues({
@@ -30,9 +34,9 @@ const AddForm = ({ handleClose }) => {
         id: leaderResponse.id,
       });
     }
-
     handleClose();
   };
+
   return (
     <form onSubmit={e => onSubmit(e)}>
       <InputLabel htmlFor="user-name">Add user name:</InputLabel>

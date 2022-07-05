@@ -8,6 +8,15 @@
   color: rgb(220, 220, 220);
 }
 
+.diffrence {
+  div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+}
+
 .leader {
   & > span {
     position: relative;

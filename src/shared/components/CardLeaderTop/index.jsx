@@ -18,5 +18,8 @@ CardLeaderTop.propTypes = {
   leader: PropTypes.shape({
     name: PropTypes.string.isRequired,
     score: PropTypes.number.isRequired,
+    position: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,
+    picture: PropTypes.string.isRequired,
   }),
 };

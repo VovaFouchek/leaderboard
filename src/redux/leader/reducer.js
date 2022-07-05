@@ -27,13 +27,13 @@ const leaderSlice = createSlice({
     startLoading(state) {
       state.isLoading = true;
     },
-    initLeaders(state, action) {
+    setLeaders(state, action) {
       state.leaders = setPositionsAndSortedList(action.payload, state.sortType);
       state.isLoading = false;
     },
     leadersFetchingError(state, action) {
       state.error = action.payload;
-      state.isLoading = false;
+      state.isLoading = true;
     },
     sortLeaders(state) {
       state.sortType = reverseOrderType(state.sortType);
@@ -51,7 +51,7 @@ const leaderSlice = createSlice({
   },
 });
 
-export const { startLoading, initLeaders, leadersFetchingError, sortLeaders, addLeader, editLeader } =
+export const { startLoading, setLeaders, leadersFetchingError, sortLeaders, addLeader, editLeader } =
   leaderSlice.actions;
 
 export default leaderSlice.reducer;

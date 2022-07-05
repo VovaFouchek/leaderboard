@@ -1,7 +1,16 @@
 .wrapControl {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   padding: 15px;
+  gap: 25px;
+
+  @media (max-width: 1100px) {
+    gap: 12px;
+  }
+  @media (max-width: 425px) {
+    flex-direction: column;
+  }
 }
 
 button {
@@ -15,4 +24,5 @@ button {
   background: #8201d0;
   color: #fff;
   cursor: pointer;
+  visibility: visible;
 }
