@@ -1,19 +1,25 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { editLeader } from 'redux/reducer';
+import { editLeader } from 'redux/leader/reducer';
 import PropTypes from 'prop-types';
 
 import { Input, InputLabel, Button } from '@mui/material';
 import { updateLeader } from 'shared/api/requests/leaders';
+import { setLeadersOfCurrentDay } from 'redux/history/reducer';
 
 const leaderDefaultValue = { name: '', score: 0, position: 0, id: '', picture: '' };
 
 const EditForm = ({ leader = leaderDefaultValue, handleClose }) => {
   const [values, setValues] = useState(leader);
   const dispatch = useDispatch();
-  const sortType = useSelector(state => state.leader);
+  const { leaders, sortType } = useSelector(state => state.leader);
+  const { historyItems, day } = useSelector(state => state.history);
 
   const editLeaderInList = leaderData => dispatch(editLeader(leaderData, sortType));
+
+  useEffect(() => {
+    dispatch(setLeadersOfCurrentDay(leaders));
+  }, [leaders]);
 
   const handleChange = e => {
     setValues({
@@ -24,11 +30,10 @@ const EditForm = ({ leader = leaderDefaultValue, handleClose }) => {
 
   const onSubmit = async e => {
     e.preventDefault();
-    const leaderResponse = await updateLeader(values);
+    const leaderResponse = await updateLeader(values, historyItems, day);
     if (leaderResponse) {
       editLeaderInList({
         ...leaderResponse,
-        score: +leaderResponse.score,
       });
     }
     handleClose();

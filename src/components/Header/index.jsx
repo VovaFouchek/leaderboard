@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import CircularProgress from '@mui/material/CircularProgress';
 import Box from '@mui/material/Box';
 
+import History from 'components/History';
 import { CardLeaderTop } from 'shared/components/CardLeaderTop';
 import { getLeaderTop } from 'helpers/functions';
 
@@ -25,8 +26,9 @@ const Header = () => {
           {leaders?.length ? (
             leaders.map(leader => <CardLeaderTop leader={leader} key={leader.id} />)
           ) : (
-            <h2>No leader</h2>
+            <h2>No leaders</h2>
           )}
+          <History />
         </div>
         <img className={s.bg__img} src="images/people/business-people.svg" alt="Business people" />
       </div>

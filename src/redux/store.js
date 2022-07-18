@@ -1,10 +1,13 @@
 import { configureStore } from '@reduxjs/toolkit';
-import logger from 'redux-logger';
-import leaderReducer from 'redux/reducer';
+import historyReducer from 'redux/history/reducer';
+import leaderReducer from 'redux/leader/reducer';
 
-export const store = configureStore({
+const store = configureStore({
   reducer: {
     leader: leaderReducer,
+    history: historyReducer,
   },
-  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(logger),
+  middleware: getDefaultMiddleware => getDefaultMiddleware().concat(),
 });
+
+export default store;

@@ -1,14 +1,16 @@
 import axios from 'axios';
 import { setZeroScore } from 'helpers/functions';
 import { API } from 'shared/api/config/leaders.api';
-import { startLoading, initLeaders, leadersFetchingError } from 'redux/reducer';
+import { setLeadersOfCurrentDay } from 'redux/history/reducer';
+import { startLoading, leadersFetchingError, setLeaders } from 'redux/leader/reducer';
 
 export const fetchLeaders = () => async dispatch => {
   try {
     dispatch(startLoading());
     const response = await axios.get(`${API.LEADERS}`);
     const preparedData = setZeroScore(response.data);
-    dispatch(initLeaders(preparedData));
+    dispatch(setLeaders(preparedData));
+    dispatch(setLeadersOfCurrentDay(preparedData));
   } catch (e) {
     dispatch(leadersFetchingError(e.message));
   }
