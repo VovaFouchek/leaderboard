@@ -1,4 +1,4 @@
-.wrapControl {
+.control__wrap {
   display: flex;
   align-items: center;
   flex-wrap: wrap;
@@ -11,18 +11,4 @@
   @media (max-width: 425px) {
     flex-direction: column;
   }
-}
-
-button {
-  max-width: 150px;
-  width: 100%;
-  margin: 0 15px;
-  padding: 10px;
-  border: 0;
-  border-radius: 5px;
-  outline: none;
-  background: #8201d0;
-  color: #fff;
-  cursor: pointer;
-  visibility: visible;
 }

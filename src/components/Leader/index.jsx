@@ -1,74 +1,62 @@
 import { useState } from 'react';
+
 import PropTypes from 'prop-types';
-
 import { BsPencil } from 'react-icons/bs';
-import { BasicModal } from 'shared/components/BasicModal';
-import { getImagePath, ordinalSuffixOf } from 'helpers/functions';
-import { pathRouters } from 'utility/pathRouters';
 import { useSelector } from 'react-redux';
-import EditForm from 'components/EditForm';
-import s from './leader.module.scss';
 
-const leaderDefaultValue = { name: '', score: 0, position: 0, id: '', picture: '' };
+import EditForm from 'components/EditForm';
+import { leaderDefaultValue } from 'helpers/consts';
+import { getImagePath, ordinalSuffixOf } from 'helpers/functions';
+import { getHistoryList } from 'redux/history/selectors';
+import { BasicModal } from 'shared/components/BasicModal';
+import LeaderPosition from 'shared/components/LeaderPosition';
+import { pathRouters } from 'utility/pathRouters';
+
+import s from './leader.module.scss';
 
 const Leader = ({ leader = leaderDefaultValue }) => {
   const [open, setOpen] = useState(false);
+
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const position = ordinalSuffixOf(leader.position);
   const routers = pathRouters();
-  const { historyItems, day } = useSelector(state => state.history);
+  const position = ordinalSuffixOf(leader.position);
+
+  const { historyItems, day } = useSelector(getHistoryList);
+  const historyLength = historyItems.length;
+  const isLastDay = day === historyLength;
+
   const redirectToLeaderProfile = () => day === historyItems.length && routers.setPath(leader.id);
 
-  const findLeaderPosition = historyItems[0]?.leaders.find(person => person.id === leader.id);
-
-  const checkDifferenceOfPosition = person => {
-    const positionDifference = findLeaderPosition && findLeaderPosition.position - person.position;
-    if (positionDifference > 0) {
-      return (
-        <div>
-          <img src="images/green__arrow.png" alt="arrow" />
-          <p>+{positionDifference}</p>
-        </div>
-      );
-    }
-    if (positionDifference < 0) {
-      return (
-        <div>
-          <img src="images/red__arrow.png" alt="arrow" />
-          <p>{positionDifference}</p>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <img src="images/yellow__arrow.png" alt="arrow" />
-        <div>No change</div>
-      </div>
-    );
-  };
-
   return (
-    <tr>
-      <td className={s.position}>{position}</td>
-      <td className={s.photo}>
-        <img src={getImagePath(leader.picture)} aria-hidden onClick={redirectToLeaderProfile} alt="avatar" />
+    <tr className={s.leader}>
+      <td className={s.leader__position}>{position}</td>
+      <td className={s.leader__photo_wrap}>
+        <img
+          src={getImagePath(leader.picture)}
+          onClick={redirectToLeaderProfile}
+          className={s.leader__photo}
+          aria-hidden
+          alt="avatar"
+        />
       </td>
-      <td className={s.leader}>
-        <span aria-hidden onClick={redirectToLeaderProfile}>
+      <td>
+        <span className={s.leader__name} aria-hidden onClick={redirectToLeaderProfile}>
           {leader.name}
         </span>
       </td>
-      <td className={s.score}>{leader.score}</td>
-      {day === historyItems.length && (
+      <td className={s.leader__score}>{leader.score}</td>
+      {isLastDay && (
         <td className={s.edit}>
-          <BsPencil onClick={handleOpen} />
+          <BsPencil className={s.leader__img_pencil} onClick={handleOpen} />
           <BasicModal handleClose={handleClose} open={open}>
             <EditForm leader={leader} handleClose={handleClose} />
           </BasicModal>
         </td>
       )}
-      <td className={s.diffrence}>{checkDifferenceOfPosition(leader)}</td>
+      <td>
+        <LeaderPosition leader={leader} />
+      </td>
     </tr>
   );
 };

@@ -55,8 +55,9 @@ export const getLeaderTop = listOfLeaders => {
   return sortListByOrder(filteredLeadersList);
 };
 
-export const setZeroScore = data => {
-  return data.map(item => (!item.score ? { ...item, score: 0 } : item));
-};
+export const setZeroScore = data => data.map(item => (!item.score ? { ...item, score: 0 } : item));
 
 export const sortValues = (data, property) => [...data].sort((a, b) => a[property] - b[property]);
+
+export const isDifferenceArray = (firstArray, secondArray) =>
+  JSON.stringify(firstArray) === JSON.stringify(secondArray);

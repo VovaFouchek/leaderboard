@@ -1,13 +1,17 @@
 import { useState } from 'react';
+
 import { useDispatch, useSelector } from 'react-redux';
 
-import { BasicModal } from 'shared/components/BasicModal';
-import { sortLeaders } from 'redux/leader/reducer';
 import AddForm from 'components/AddForm';
-
-import { Button } from '@mui/material';
+import { btnColors } from 'helpers/consts';
+import { isDifferenceArray } from 'helpers/functions';
 import { addNewDay } from 'redux/history/actions';
 import { changeDay } from 'redux/history/reducer';
+import { getHistoryList } from 'redux/history/selectors';
+import { sortLeaders } from 'redux/leader/reducer';
+import { BasicModal } from 'shared/components/BasicModal';
+import MainBtn from 'shared/components/MainBtn';
+
 import s from './controls.module.scss';
 
 const Controls = () => {
@@ -16,101 +20,48 @@ const Controls = () => {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
 
-  const { historyItems, day, leadersOfCurrentDay } = useSelector(state => state.history);
+  const { historyItems, day, leadersOfCurrentDay } = useSelector(getHistoryList);
   const sortedLeaders = () => dispatch(sortLeaders());
   const changeToPreviousDay = () => dispatch(changeDay(day - 1));
   const changeToNextDay = () => dispatch(changeDay(day + 1));
   const addNewDayToHistory = () => dispatch(addNewDay(leadersOfCurrentDay));
-  const getDifference = (array1, array2) => JSON.stringify(array1) === JSON.stringify(array2);
+
+  const historyLength = historyItems.length;
+  const isFirstDay = day === 0;
+  const isLastDay = day === historyLength;
+  const isDataChanged = historyItems && isDifferenceArray(leadersOfCurrentDay, historyItems.at(-1)?.leaders);
+  const checkDay = isLastDay ? 'block' : 'none';
 
   return (
-    <div className={s.wrapControl}>
+    <div className={s.control__wrap}>
       <strong>Leaders table for this period</strong>
-      <Button
-        variant="contained"
-        onClick={sortedLeaders}
-        sx={{
-          maxWidth: '140px',
-          backgroundColor: '#8201d0',
-          fontSize: '13px',
-          textTransform: 'inherit',
-          '&:hover': {
-            backgroundColor: '#9700dd',
-          },
-        }}
-      >
-        Sort by
-      </Button>
+      <MainBtn onClick={sortedLeaders}>Sort by</MainBtn>
 
-      <Button
-        variant="contained"
+      <MainBtn
         onClick={changeToPreviousDay}
-        disabled={day === 0}
-        sx={{
-          maxWidth: '140px',
-          backgroundColor: '#4c16d0',
-          fontSize: '13px',
-          textTransform: 'inherit',
-          '&:hover': {
-            backgroundColor: '#7239ff',
-          },
-        }}
+        disabled={isFirstDay}
+        extraColor={btnColors.extraColorForBtn}
+        extraColorHover={btnColors.extraHoverColorForBtn}
       >
         Previous day
-      </Button>
+      </MainBtn>
 
-      <Button
-        variant="contained"
+      <MainBtn
         onClick={changeToNextDay}
-        disabled={day === historyItems.length}
-        sx={{
-          maxWidth: '140px',
-          backgroundColor: '#4c16d0',
-          fontSize: '13px',
-          textTransform: 'inherit',
-          '&:hover': {
-            backgroundColor: '#7239ff',
-          },
-        }}
+        disabled={isLastDay}
+        extraColor={btnColors.extraColorForBtn}
+        extraColorHover={btnColors.extraHoverColorForBtn}
       >
         Next day
-      </Button>
+      </MainBtn>
 
-      <Button
-        variant="contained"
-        onClick={handleOpen}
-        disabled={day !== historyItems.length}
-        sx={{
-          maxWidth: '140px',
-          backgroundColor: '#8201d0',
-          fontSize: '13px',
-          textTransform: 'inherit',
-          display: day === historyItems.length ? 'block' : 'none',
-          '&:hover': {
-            backgroundColor: '#9700dd',
-          },
-        }}
-      >
+      <MainBtn onClick={handleOpen} disabled={!isLastDay} option={checkDay}>
         Add new member
-      </Button>
+      </MainBtn>
 
-      <Button
-        variant="contained"
-        onClick={addNewDayToHistory}
-        disabled={historyItems && getDifference(leadersOfCurrentDay, historyItems.at(-1)?.leaders)}
-        sx={{
-          maxWidth: '140px',
-          backgroundColor: '#8201d0',
-          fontSize: '13px',
-          textTransform: 'inherit',
-          display: day === historyItems.length ? 'block' : 'none',
-          '&:hover': {
-            backgroundColor: '#9700dd',
-          },
-        }}
-      >
+      <MainBtn onClick={addNewDayToHistory} disabled={isDataChanged} option={checkDay}>
         Add new day
-      </Button>
+      </MainBtn>
 
       <BasicModal handleClose={handleClose} open={open}>
         <AddForm handleClose={handleClose} />

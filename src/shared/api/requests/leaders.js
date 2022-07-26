@@ -1,4 +1,5 @@
 import { getRandomPhoto } from 'helpers/functions';
+
 import axios from '../config/axios';
 import { API } from '../config/leaders.api';
 

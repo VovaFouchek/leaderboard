@@ -1,46 +1,45 @@
 .banner {
-  background: #8201d0;
-  border-radius: 0.6rem;
+  min-height: 240px;
+  position: relative;
   margin-top: 10px;
   padding: 20px;
-  position: relative;
-  overflow: hidden;
-  min-height: 240px;
+  background: #8201d0;
+  border-radius: 0.6rem;
   box-shadow: 0px 4px 13px 2px rgb(52 34 80 / 20%);
+  overflow: hidden;
 
-  .text {
-    color: #fff;
+  &__text {
     margin-bottom: 20px;
+    color: #fff;
   }
 
-  .bg__img {
+  &__picture {
     width: 100%;
-    object-fit: contain;
     max-width: 300px;
     position: absolute;
-    z-index: 1;
     bottom: -44px;
     right: 0;
     opacity: 0.4;
+    object-fit: contain;
+    z-index: 1;
   }
 }
 
 .title {
+  padding: 1rem 0;
   font-family: 'Roboto', sans-serif;
   font-size: 2.5rem;
-  text-align: center;
-  padding: 1rem 0;
   font-weight: 400;
+  text-align: center;
 }
 
-.container__card {
+.card__container {
+  width: 100%;
+  min-height: 160px;
   position: relative;
   display: flex;
   justify-content: space-between;
   gap: 30px;
-  width: 100%;
-  // max-width: 680px;
-  min-height: 160px;
   z-index: 2;
 
   @media (max-width: 980px) {
@@ -49,7 +48,7 @@
   }
 }
 
-.wrap__progress {
+.progress__wrap {
   position: absolute;
   left: 50%;
   top: 50%;

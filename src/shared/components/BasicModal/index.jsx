@@ -1,5 +1,5 @@
-import PropTypes from 'prop-types';
 import { Modal, Box } from '@mui/material';
+import PropTypes from 'prop-types';
 
 export const BasicModal = ({ open, handleClose, children }) => {
   const style = {

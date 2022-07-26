@@ -1,18 +1,22 @@
 import { useEffect } from 'react';
+
+import Box from '@mui/material/Box';
+import CircularProgress from '@mui/material/CircularProgress';
 import { useDispatch, useSelector } from 'react-redux';
 
-import CircularProgress from '@mui/material/CircularProgress';
-import Box from '@mui/material/Box';
-
-import { Header, Controls, Leader } from 'components';
-import { fetchLeaders } from 'redux/leader/actions';
+import { Controls, Header, Leader } from 'components';
 import { getHistory } from 'redux/history/actions';
+import { getHistoryList } from 'redux/history/selectors';
+import { fetchLeaders } from 'redux/leader/actions';
+import { getLeaderboardList } from 'redux/leader/selectors';
+
 import s from './board.module.scss';
 
 const Board = () => {
   const dispatch = useDispatch();
-  const { leaders, isLoading } = useSelector(state => state.leader);
-  const { historyItems, day } = useSelector(state => state.history);
+  const { leaderboardList, isLoading } = useSelector(getLeaderboardList);
+  const { historyItems, day } = useSelector(getHistoryList);
+  const editing = day === historyItems.length && <th>Editing</th>;
 
   useEffect(() => {
     dispatch(fetchLeaders());
@@ -31,21 +35,21 @@ const Board = () => {
               <th>Photo</th>
               <th>Leader</th>
               <th>Score</th>
-              {day === historyItems.length && <th>Editing</th>}
+              {editing}
               <th>Position</th>
             </tr>
           </thead>
           <tbody>
             {isLoading && (
-              <tr className={s.container}>
+              <tr className={s.progress__container}>
                 <td>
-                  <Box className={s.wrap__progress}>
+                  <Box className={s.progress__wrap}>
                     <CircularProgress />
                   </Box>
                 </td>
               </tr>
             )}
-            {leaders.map(leader => (
+            {leaderboardList.map(leader => (
               <Leader leader={leader} key={leader.id} />
             ))}
           </tbody>

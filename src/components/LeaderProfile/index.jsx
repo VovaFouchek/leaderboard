@@ -1,9 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
+
 import { useParams } from 'react-router-dom';
 
 import { getImagePath } from 'helpers/functions';
 import { getLeaderByID } from 'shared/api/requests/leaders';
 import { pathRouters } from 'utility/pathRouters';
+
 import s from './leaderProfile.module.scss';
 
 const leaderDefaultValue = { name: '', score: '0', picture: 'default__avatar' };
@@ -23,14 +25,14 @@ const LeaderProfile = () => {
   }, []);
 
   return (
-    <div className={s.inner}>
-      <button type="button" onClick={() => routers.setPathBack()}>
+    <div className={s.profile}>
+      <button type="button" className={s.profile__back} onClick={() => routers.setPathBack()}>
         Back
       </button>
-      <section className={s.wrapper}>
+      <section className={s.profile__wrap}>
         <img src={getImagePath(leaderInfo.picture)} aria-hidden="true" alt="avatar" />
-        <div className={s.container}>
-          <h2 className={s.title}>Detail Information:</h2>
+        <div className={s.profile__container}>
+          <h2 className={s.profile__title}>Detail Information:</h2>
           <p>
             Name:<strong> {leaderInfo.name}</strong>
           </p>

@@ -1,70 +1,72 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { editLeader } from 'redux/leader/reducer';
+import { useEffect } from 'react';
+
+import { Button, Input, InputLabel } from '@mui/material';
+import { Field, Form, Formik } from 'formik';
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Input, InputLabel, Button } from '@mui/material';
-import { updateLeader } from 'shared/api/requests/leaders';
+import { leaderDefaultValue } from 'helpers/consts';
 import { setLeadersOfCurrentDay } from 'redux/history/reducer';
-
-const leaderDefaultValue = { name: '', score: 0, position: 0, id: '', picture: '' };
+import { editLeader } from 'redux/leader/reducer';
+import { getLeaderboardList } from 'redux/leader/selectors';
+import { updateLeader } from 'shared/api/requests/leaders';
 
 const EditForm = ({ leader = leaderDefaultValue, handleClose }) => {
-  const [values, setValues] = useState(leader);
   const dispatch = useDispatch();
-  const { leaders, sortType } = useSelector(state => state.leader);
-  const { historyItems, day } = useSelector(state => state.history);
+  const { leaderboardList, sortType } = useSelector(getLeaderboardList);
 
   const editLeaderInList = leaderData => dispatch(editLeader(leaderData, sortType));
 
-  useEffect(() => {
-    dispatch(setLeadersOfCurrentDay(leaders));
-  }, [leaders]);
-
-  const handleChange = e => {
-    setValues({
-      ...values,
-      [e.target.name]: e.target.value,
-    });
+  const initialValues = {
+    name: leader.name,
+    score: leader.score,
   };
 
-  const onSubmit = async e => {
-    e.preventDefault();
-    const leaderResponse = await updateLeader(values, historyItems, day);
+  const onSubmit = async values => {
+    const updateLeaderData = { ...values, id: leader.id };
+    const leaderResponse = await updateLeader(updateLeaderData);
     if (leaderResponse) {
-      editLeaderInList({
-        ...leaderResponse,
-      });
+      editLeaderInList({ ...leaderResponse });
     }
     handleClose();
   };
 
+  useEffect(() => {
+    dispatch(setLeadersOfCurrentDay(leaderboardList));
+  }, [leaderboardList]);
+
   return (
-    <form onSubmit={e => onSubmit(e)}>
-      <InputLabel htmlFor="user-name">Edit user name:</InputLabel>
-      <Input
-        onChange={e => handleChange(e)}
-        defaultValue={leader.name}
-        name="name"
-        id="user-name"
-        aria-describedby="my-helper-text"
-        sx={{ mb: '30px' }}
-        required
-      />
-      <InputLabel htmlFor="user-score">Edit user score:</InputLabel>
-      <Input
-        onChange={e => handleChange(e)}
-        defaultValue={leader.score}
-        name="score"
-        type="number"
-        id="user-score"
-        aria-describedby="my-helper-text"
-        required
-      />
-      <Button type="submit" variant="contained" color="success" sx={{ mt: '20px' }}>
-        Success
-      </Button>
-    </form>
+    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+      {props => (
+        <Form>
+          <InputLabel htmlFor="name">Edit user name:</InputLabel>
+          <Field
+            component={Input}
+            onChange={props.handleChange}
+            value={props.values.name}
+            name="name"
+            id="name"
+            aria-describedby="my-helper-text"
+            sx={{ mb: '30px' }}
+            required
+          />
+          <InputLabel htmlFor="score">Edit user score:</InputLabel>
+          <Field
+            component={Input}
+            onChange={props.handleChange}
+            value={props.values.score}
+            name="score"
+            id="score"
+            type="number"
+            aria-describedby="my-helper-text"
+            required
+          />
+          <Button type="submit" variant="contained" color="success" sx={{ mt: '20px' }}>
+            Success
+          </Button>
+        </Form>
+      )}
+    </Formik>
   );
 };
 

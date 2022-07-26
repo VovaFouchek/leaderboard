@@ -1,15 +1,16 @@
 import PropTypes from 'prop-types';
-import { getImagePath } from 'helpers/functions';
-import s from './cardLeaderTop.module.scss';
 
-const leaderDefaultValue = { name: '', score: 0, position: 0, id: '', picture: '' };
+import { leaderDefaultValue } from 'helpers/consts';
+import { getImagePath } from 'helpers/functions';
+
+import s from './cardLeaderTop.module.scss';
 
 export const CardLeaderTop = ({ leader = leaderDefaultValue }) => {
   return (
     <div className={s.card}>
-      <img src={getImagePath(leader.picture)} alt="avatar" />
-      <h3>{leader.score}</h3>
-      <p>{leader.name}</p>
+      <img src={getImagePath(leader.picture)} className={s.card__picture} alt="avatar" />
+      <h3 className={s.card__title}>{leader.score}</h3>
+      <p className={s.card__text}>{leader.name}</p>
     </div>
   );
 };

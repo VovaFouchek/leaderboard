@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+
 import { orderTypes } from 'helpers/consts';
 import { reverseOrderType, sortListByOrder } from 'helpers/functions';
 
 const initialState = {
-  leaders: [],
+  leaderboardList: [],
   sortType: orderTypes.ascending,
   isLoading: false,
   error: null,
@@ -21,14 +22,14 @@ const setPositionsAndSortedList = (leaderList, sortType = initialState.sortType)
 };
 
 const leaderSlice = createSlice({
-  name: 'leader',
+  name: 'leaderboard',
   initialState,
   reducers: {
     startLoading(state) {
       state.isLoading = true;
     },
     setLeaders(state, action) {
-      state.leaders = setPositionsAndSortedList(action.payload, state.sortType);
+      state.leaderboardList = setPositionsAndSortedList(action.payload, state.sortType);
       state.isLoading = false;
     },
     leadersFetchingError(state, action) {
@@ -37,16 +38,18 @@ const leaderSlice = createSlice({
     },
     sortLeaders(state) {
       state.sortType = reverseOrderType(state.sortType);
-      state.leaders = sortListByOrder(state.leaders, state.sortType);
+      state.leaderboardList = sortListByOrder(state.leaderboardList, state.sortType);
     },
     addLeader(state, action) {
-      const newLeader = { ...action.payload, position: state.leaders.length + 1 };
-      const listWithNewLeader = [...state.leaders, newLeader];
-      state.leaders = setPositionsAndSortedList(listWithNewLeader, state.sortType);
+      const newLeader = { ...action.payload, position: state.leaderboardList.length + 1 };
+      const listWithNewLeader = [...state.leaderboardList, newLeader];
+      state.leaderboardList = setPositionsAndSortedList(listWithNewLeader, state.sortType);
     },
     editLeader(state, action) {
-      const newLeadersList = state.leaders.map(leader => (leader.id === action.payload.id ? action.payload : leader));
-      state.leaders = setPositionsAndSortedList(newLeadersList, state.sortType);
+      const newLeadersList = state.leaderboardList.map(leader =>
+        leader.id === action.payload.id ? action.payload : leader
+      );
+      state.leaderboardList = setPositionsAndSortedList(newLeadersList, state.sortType);
     },
   },
 });
