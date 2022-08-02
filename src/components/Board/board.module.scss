@@ -1,0 +1,67 @@
+.board {
+  border: 1px solid #80808096;
+  border-radius: 0.6rem;
+  overflow: hidden;
+
+  table {
+    width: 100%;
+    min-height: 200px;
+    border-collapse: collapse;
+
+    thead {
+      background: rgb(210, 210, 210);
+
+      th {
+        padding: 4px 0;
+        font-size: 1.5rem;
+        font-family: sans-serif;
+
+        @media (max-width: 500px) {
+          font-size: 16px;
+        }
+
+        &:first-child {
+          width: 15%;
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        border-bottom: 1px solid #8080803d;
+        text-align: center;
+
+        &:last-child {
+          border-bottom: 0;
+        }
+
+        td {
+          padding: 5px;
+          font-size: 1.3rem;
+
+          &:last-child {
+            img {
+              max-width: 20px;
+              width: 100%;
+            }
+          }
+
+          @media (max-width: 500px) {
+            font-size: 18px;
+          }
+        }
+      }
+    }
+  }
+}
+
+.progress__container {
+  position: relative;
+
+  &__wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+}
